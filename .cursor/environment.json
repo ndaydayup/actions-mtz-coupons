@@ -1,4 +1,4 @@
 {
   "install": "corepack enable && corepack pnpm install --frozen-lockfile || corepack pnpm install",
-  "start": "mkdir -p \"$HOME/.cursor/skills\" && if [ -d .cursor/skills ]; then cp -R .cursor/skills/. \"$HOME/.cursor/skills/\"; fi; rm -rf /tmp/oh-story-skills && git clone --depth 1 https://github.com/worldwonderer/oh-story-claudecode.git /tmp/oh-story-skills >/dev/null 2>&1 && cp -R /tmp/oh-story-skills/skills/. \"$HOME/.cursor/skills/\" || true"
+  "start": "mkdir -p \"$HOME/.cursor/skills\" && if [ -d .cursor/skills ]; then cp -R .cursor/skills/. \"$HOME/.cursor/skills/\"; fi"
 }
