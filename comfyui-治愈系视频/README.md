@@ -1,132 +1,100 @@
-# 治愈系视频生成 · ComfyUI 专属工作流包
+# 治愈系视频 · ComfyUI 工作流包
 
-基于 **Wan 2.2（通义万相）官方原生节点**定制，专为「治愈系」短视频：暖光、慢动作、低饱和、安静氛围。
-
-> 说明：云端无法访问你本机的 `F:\COMFYUI\入门工作流`，因此无法直接扫描该目录。  
-> 本包按 **2025–2026 当前最稳、最好用的开源视频方案（Wan2.2）** 重新搭好，拖进 ComfyUI 即可用。
+> **先看**：`【先看】文件放哪里.md`  
+> 文件**不会**自动出现在 `F:\COMFYUI`，需从本仓库下载后拷贝到本机。
 
 ---
 
-## 选哪个工作流？
+## 当前最优结论（你已下 MiniMax H3）
 
-| 文件 | 场景 | 显存建议 | 建议优先级 |
-|------|------|----------|------------|
-| `workflows/01_治愈系_文生视频_Wan22_5B.json` | 纯文字出视频 | ≥8GB | ★★★★★ 先跑这个 |
-| `workflows/02_治愈系_图生视频_Wan22_5B.json` | 一张静帧动起来 | ≥8GB | ★★★★★ |
-| `workflows/03_治愈系_文生视频_Wan22_14B.json` | 高画质文生视频 | ≥16GB（24GB 更稳） | ★★★★ |
-| `workflows/04_治愈系_图生视频_Wan22_14B.json` | 高画质图生视频 | ≥16GB（24GB 更稳） | ★★★★ |
+| 排名 | 方案 | 说明 |
+|------|------|------|
+| ★★★★★ | **MiniMax H3** | 原生立体声音频（雨声/钢琴一起出），指令更强，成片更完整 |
+| ★★★★ | Wan 2.2 14B | 画质强，但**不带原生配乐/音效** |
+| ★★★ | Wan 2.2 5B | 显存友好试错用 |
 
-**推荐路线：** 5B 定提示词与构图 → 满意后再换 14B 出成片。
+**有 H3 就优先跑 `05 / 06 / 07`。**
 
----
+要求：**ComfyUI ≥ 0.30.0**
 
-## 安装步骤（5 分钟）
-
-### 1. 更新 ComfyUI
-
-必须用较新版本（含 Wan2.2 原生节点）。菜单里应能看到：
-
-- `Wan22ImageToVideoLatent`
-- `EmptyHunyuanLatentVideo` / `WanImageToVideo`
-- `ModelSamplingSD3`
-
-### 2. 下载模型到对应目录
-
-模型统一仓库（推荐）：  
-https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files
-
-#### 公共依赖（5B / 14B 都要）
-
-| 文件 | 放到 |
-|------|------|
-| `umt5_xxl_fp8_e4m3fn_scaled.safetensors` | `ComfyUI/models/text_encoders/` |
-
-#### 只跑 5B（入门）
-
-| 文件 | 放到 |
-|------|------|
-| `wan2.2_ti2v_5B_fp16.safetensors` | `ComfyUI/models/diffusion_models/` |
-| `wan2.2_vae.safetensors` | `ComfyUI/models/vae/` |
-
-#### 再跑 14B 文生视频
-
-| 文件 | 放到 |
-|------|------|
-| `wan2.2_t2v_high_noise_14B_fp8_scaled.safetensors` | `ComfyUI/models/diffusion_models/` |
-| `wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors` | `ComfyUI/models/diffusion_models/` |
-| `wan_2.1_vae.safetensors` | `ComfyUI/models/vae/` |
-
-#### 再跑 14B 图生视频
-
-| 文件 | 放到 |
-|------|------|
-| `wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors` | `ComfyUI/models/diffusion_models/` |
-| `wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors` | `ComfyUI/models/diffusion_models/` |
-| `wan_2.1_vae.safetensors` | `ComfyUI/models/vae/`（与上面共用） |
-
-### 3. 加载工作流
-
-把 `workflows/*.json` 拖进 ComfyUI 画布，或 `工作流 → 打开`。
-
-### 4. 运行
-
-改提示词（可选）→ `Ctrl + Enter`。
-
-预置默认：`832×480`、`81` 帧（约 5 秒量级）。显存够再提到 `1280×704`、`121` 帧。
+官方指南：https://docs.comfy.org/zh/tutorials/video/minimax/minimax-h3
 
 ---
 
-## 缺什么？对照这张表告诉我
+## 工作流列表
 
-把你机器情况按下面回我，我可以继续给你改「低显存 GGUF 版 / Lightning 4 步加速版 / 加插帧 / 加配乐轨」：
+### A. MiniMax H3（推荐）
 
-- [ ] 显卡型号与显存（例如 RTX 4060 8GB / 4090 24GB）
-- [ ] ComfyUI 版本（桌面版 / 便携包 / 源码）
-- [ ] 是否已有 Wan2.1 / Wan2.2 任意模型
-- [ ] 目标：竖屏短视频（9:16）还是横屏（16:9）
-- [ ] 要不要「图生视频」为主（有静帧素材）还是「文生视频」为主
-- [ ] 是否需要配乐 / 口型 / 运镜控制（Fun Control）
-
-### 常见缺口
-
-| 缺口 | 影响 | 怎么补 |
+| 文件 | 用途 | 主模型 |
 |------|------|--------|
-| 没更新 ComfyUI | 红节点 / 找不到 Wan22 节点 | 更新到最新 Nightly/正式版 |
-| 缺 `umt5_xxl...` | 文本编码失败 | 下到 `text_encoders/` |
-| 5B 却装了 `wan_2.1_vae` | 5B 出图异常 | 5B 必须用 `wan2.2_vae` |
-| 14B 却只用了单个 unet | 质量差或报错 | 高噪+低噪两个都要 |
-| 显存不够 | CUDA OOM | 先用 5B + 832×480；或换 GGUF |
-| 想要更快 | 20–30 步偏慢 | 可加 LightX2V 4-steps LoRA（质量略降） |
+| `workflows/05_治愈系_文生视频_MiniMax_H3.json` | 文生视频+音频 | `fl2va` |
+| `workflows/06_治愈系_图生视频_MiniMax_H3.json` | 图生视频+音频 | `fl2va` |
+| `workflows/07_治愈系_参考生视频_MiniMax_H3.json` | 参考生视频 | `ref2va`（与 fl2va **不能混用**） |
+
+预置：治愈系提示词、`turbo` 关闭（质量优先）、成片约 `0.98 MP / 16:9`。
+
+### B. Wan 2.2（备选 / 显存不够时）
+
+| 文件 | 用途 | 显存 |
+|------|------|------|
+| `01_治愈系_文生视频_Wan22_5B.json` | 文生 | ≥8GB |
+| `02_治愈系_图生视频_Wan22_5B.json` | 图生 | ≥8GB |
+| `03_治愈系_文生视频_Wan22_14B.json` | 高画质文生 | ≥16GB |
+| `04_治愈系_图生视频_Wan22_14B.json` | 高画质图生 | ≥16GB |
 
 ---
 
-## 治愈系提示词怎么写
+## MiniMax H3 模型放哪里
 
-公式：
+仓库：https://huggingface.co/Comfy-Org/MiniMax-H3
+
+### 文生 / 图生（FL2VA）最少需要
+
+| 文件 | 目录 |
+|------|------|
+| `minimax_h3_fl2va_pruned_int8_convrot.safetensors` | `ComfyUI/models/diffusion_models/` |
+| `qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors` | `ComfyUI/models/text_encoders/` |
+| `minimax_h3_video_vae_int8_convrot.safetensors` | `ComfyUI/models/vae/` |
+| `minimax_h3_audio_vae_fp32.safetensors` | `ComfyUI/models/vae/` |
+| `minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors`（可选加速） | `ComfyUI/models/loras/` |
+
+### 参考生视频（R2V）额外
+
+| 文件 | 目录 |
+|------|------|
+| `minimax_h3_ref2va_pruned_int8_convrot.safetensors` | `diffusion_models/` |
+| `minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors`（可选） | `loras/` |
+
+> 你如果只下了其中一个名字接近的权重，把**实际文件名**发我，我帮你对一下该选哪条工作流。
+
+### 分辨率注意
+
+- 成片：`0.98` Megapixels + 16:9（约 1344×768）  
+- **不要**选 `1.0` MP（会变成 1376×768，超限）
+
+---
+
+## 本机推荐目录
 
 ```text
-主体 + 场景 + 缓慢动作 + 光影/色彩 + 镜头运动 + 氛围词
+F:\COMFYUI\user\default\workflows\治愈系视频\
+  ├─ 05_治愈系_文生视频_MiniMax_H3.json
+  ├─ 06_治愈系_图生视频_MiniMax_H3.json
+  ├─ 07_治愈系_参考生视频_MiniMax_H3.json
+  └─ （可选）01–04 Wan 备选
 ```
 
-示例与更多模板见：`prompts/治愈系提示词库.md`
-
-**正向关键词：** 柔光、暖色、低饱和、浅景深、慢镜头、微风、光斑缓慢移动、安静、电影感  
-**负向已预填：** 过饱和、剧烈运动、霓虹、恐怖、字幕、水印、闪烁等
+或继续放进：`F:\COMFYUI\入门工作流\治愈系视频\`
 
 ---
 
-## 和「入门工作流」目录的关系
+## 缺什么请回我
 
-若你本机 `F:\COMFYUI\入门工作流` 里已有 Wan / SVD / CogVideo / 可灵类 json：
+填 `缺什么-对照清单.md`，尤其是：
 
-1. 把本包整个文件夹拷到例如 `F:\COMFYUI\user\default\workflows\治愈系视频\`
-2. 或把 4 个 json 直接拖进 ComfyUI
-3. 若你愿意把该目录打成 zip 发上来 / 挂到网盘，我可以再帮你「扫一遍、标出哪些本来就能直接做治愈系视频」
+1. 显卡型号 / 显存  
+2. 你下载的 H3 文件**完整文件名列表**  
+3. ComfyUI 版本是否 ≥ 0.30.0  
+4. 打开 `05` 是否还有红节点  
 
----
-
-## 参考
-
-- ComfyUI 官方 Wan2.2 教程：https://docs.comfy.org/zh/tutorials/video/wan/wan2_2  
-- 官方示例仓库：https://github.com/comfyanonymous/ComfyUI_examples/tree/master/wan22  
-- 模型打包：https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged  
+有文件名我就能判断：该用 fl2va 还是 ref2va、缺没缺 audio VAE / 文本编码器。
