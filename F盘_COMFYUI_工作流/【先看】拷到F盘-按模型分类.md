@@ -1,5 +1,22 @@
 # F:\COMFYUI\工作流 · 按模型分类索引
 
+## 模型已经下到 F:\COMFYUI，但目录乱？
+
+1. 把整个 `F盘_COMFYUI_工作流` 文件夹拷到本机任意位置（或直接放进 `F:\COMFYUI\`）
+2. **双击** `一键整理Wan22模型.bat`
+3. 先看预览 → 回车后真正移动，并同步 `工作流\` 到 `F:\COMFYUI\工作流\`
+
+也可只用 PowerShell：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "整理Wan22模型到正确目录.ps1" -Root "F:\COMFYUI"
+powershell -ExecutionPolicy Bypass -File "整理Wan22模型到正确目录.ps1" -Root "F:\COMFYUI" -Apply
+```
+
+若脚本报「未精确匹配」，把打印的文件名列表发我，我补规则。
+
+---
+
 把本目录 **整个 `工作流` 文件夹** 拷到：
 
 ```text
